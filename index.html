@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mooncakes</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="content">
+    <div id="item-container"></div>
+
+    <div id="receipt">
+      <div id="recept-header">
+        <h1>Reciept</h1>
+      </div>
+      <hr>
+      <div id="receipt-itemized"></div>
+      <div id="receipt-total">
+        <hr>
+        <h2>Total: $0.00</h2>
+      </div>
+
+      <div id="receipt-buttons">
+        <div id="buy-cancel" class="flex-container">
+          <button id="buy" onclick="buy_items()" class="flexbox">Buy</button>
+          <button id="cancel" onclick="clear_receipt()" class="flexbox">Cancel</button>
+        </div>
+        <div id="print-report" class="flex-container">
+          <button class="flexbox">Print Report</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./script.js"></script>
+</body>
+</html>

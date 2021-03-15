@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    background-color: whitesmoke;
+}
+
+button {
+    padding: 8px 16px 8px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+}
+
+#buy {
+    background-color: #208637;
+    color: whitesmoke;
+}
+
+#buy-cancel {
+    margin: 4px;
+}
+
+#cancel {
+    background-color: #A51D2A;
+    color: whitesmoke
+}
+
+#content {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+    flex-wrap: nowrap;
+}
+
+#item-container {
+    flex: 4;
+    padding: 32px;
+    background-color: whitesmoke;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#print-report {
+    margin: 4px;
+}
+
+#receipt {
+    flex: 1;
+    background-color: #e8e8e8;
+}
+
+#receipt-header {
+    margin: 0;
+    padding: 8px;
+    text-align: center;
+    height: 5vh;
+}
+
+#receipt-header > h1 {
+    margin: 0;
+    text-align: center;
+}
+
+#receipt-buttons {
+    height: 5vh;
+}
+
+#receipt-itemized {
+    height: 75vh;
+    overflow: auto;
+}
+
+#receipt-total {
+    height: 5vh;
+}
+
+.item {
+    height: 100px;
+    width: 200px;
+    margin: 16px;
+    background-color: #128293;
+    color: white;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.item > h2 {
+    flex: 1;
+    margin-bottom: 0.5rem;
+}
+
+.item > h3 {
+    flex: 1;
+    margin-top: 0.5rem;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flexbox {
+    flex: 1;
+}
