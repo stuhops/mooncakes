@@ -81,6 +81,10 @@ button {
     height: 5vh;
 }
 
+#report {
+    display: none;
+}
+
 .item {
     height: 100px;
     width: 200px;
@@ -111,4 +115,37 @@ button {
 
 .flexbox {
     flex: 1;
+}
+
+@media print {
+   /* This media query only applies itself to the page during printing */
+    h1, h2, h3 {
+        font-size: 16px;
+    }
+    #content {
+        display: none;
+    }
+
+    #report {
+        display: block !important;
+        background-color: white;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 15px;
+        /* font-size: 14px;
+        line-height: 18px; */
+    }
+
+    #receipt-buttons {
+        display: none !important;
+    }
+
+    #receipt-itemized, #receipt-total {
+       overflow: visible;
+    }
+
 }

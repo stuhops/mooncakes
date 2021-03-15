@@ -27,8 +27,42 @@ let select_item = (item_num, num_eggs) => {
   reload_receipt();
 }
 
+let reload_report = () => {
+  let report_el = document.getElementById("report");
+  let report_string = "";
+  let total_cakes = 0;
+  let total_money = 0;
+  report_string += `<table>
+    <tr>
+      <th>Quantity</th>
+      <th>Type</th>
+      <th>Eggs</th>
+    </tr>
+  `;
+  for(item in totals) {
+    for(let eggs = 0; eggs < 3; eggs++) {
+      if(totals[item].count[eggs] > 0) {
+        report_string += `<tr class="report-row">
+          <td>${totals[item].count[eggs]}</td>
+          <td>${item}</td>
+          <td>${eggs}</td>
+        </tr>`;
+        total_cakes += totals[item].count[eggs];
+        total_money += totals[item].count[eggs] * totals[item].item.price[eggs];
+      }
+    }
+  }
+  report_string += `<tr class="report-row">
+      <td>${total_cakes}</td>
+      <td>Total</td>
+      <td>$${total_money.toFixed(2)}</td>
+    </tr>
+  </table>`;
+
+  report_el.innerHTML = report_string;
+}
+
 let reload_receipt = () => {
-  let receipt_el = document.getElementById("receipt");
   let receipt_items_el = document.getElementById("receipt-itemized");
   let receipt_total_el = document.getElementById("receipt-total");
   let total = 0;
@@ -72,7 +106,19 @@ let buy_items = () => {
 }
 
 let print_report = () => {
-  console.log(JSON.parse(window.localStorage.getItem("mooncake-totals")));
+  if(JSON.stringify(receipt) !== "{}") {
+    window.alert("Please either buy or cancel the items on the current receipt before looking at totals.")
+    return false;
+  }
+  else {
+    totals = JSON.parse(window.localStorage.getItem("mooncake-totals"));
+    reload_report();
+
+    window.print();
+
+    reload_receipt();
+    return;
+  }
 }
 
 let clear_totals = () => {
