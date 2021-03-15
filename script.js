@@ -6,7 +6,7 @@ let initialize = () => {
 
 
         item_container.innerHTML += `<button class="item" onclick="select_item(${item}, ${eggs})">
-            <h2>${items[item].name} (${eggs} eggs)</h2>
+            <h2>${items[item].name} (${eggs} egg)</h2>
             <h3>$${items[item].price[eggs].toFixed(2)}</h3>
           </button>`
       }
@@ -52,16 +52,31 @@ let clear_receipt = () => {
   reload_receipt();
 }
 
-// TODO: Implament logic
 let buy_items = () => {
-  // TODO: Add totals to the cache
+  totals = JSON.parse(window.localStorage.getItem("mooncake-totals"));
+  for(item in receipt) {
+    if(item in totals) {
+      for(let i = 0; i < receipt[item].count.length; i++) {
+        totals[item].count[i] += receipt[item].count[i];
+      }
+    }
+    else {
+      totals[item] = receipt[item];
+    }
+  }
+
+  window.localStorage.setItem("mooncake-totals", JSON.stringify(totals));
+
   receipt = {};
   reload_receipt();
 }
 
-// TODO: Implament logic
 let print_report = () => {
-  // Print totals for this week, this month, this year
+  console.log(JSON.parse(window.localStorage.getItem("mooncake-totals")));
+}
+
+let clear_totals = () => {
+  window.localStorage.setItem("mooncake-totals", JSON.stringify({}));
 }
 
 let items = [
@@ -77,6 +92,15 @@ let items = [
     // {"name": "thap cam dac biet...", "price": ["n/a", "n/a", 8.25]},
 ];
 
+// Initialize the totals
+if(JSON.parse(window.localStorage.getItem("mooncake-totals")) !== null) {
+  let totals = JSON.parse(window.localStorage.getItem("mooncake-totals"));
+}
+else {
+  let totals = {};
+  window.localStorage.setItem("mooncake-totals", JSON.stringify(totals));
+
+}
 let receipt = {};
 
 initialize();
