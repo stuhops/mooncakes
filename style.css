@@ -85,6 +85,11 @@ button {
     display: none;
 }
 
+.report-total-row {
+    border: solid;
+    border-width: 1px 0;
+}
+
 .item {
     height: 100px;
     width: 200px;
@@ -136,8 +141,6 @@ button {
         left: 0;
         margin: 0;
         padding: 15px;
-        /* font-size: 14px;
-        line-height: 18px; */
     }
 
     #receipt-buttons {

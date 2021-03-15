@@ -2,9 +2,10 @@ let initialize = () => {
   let item_container = document.getElementById("item-container");
   for(let item = 0; item < items.length; item++) {
     for(let eggs = 0; eggs < 3; eggs++) {
+      if(items[item].name === "dai gia dau" || items[item].name === "dai gia t/c") {
+        eggs = 6;
+      }
       if(items[item].price[eggs] != "n/a") {
-
-
         item_container.innerHTML += `<button class="item" onclick="select_item(${item}, ${eggs})">
             <h2>${items[item].name} (${eggs} egg)</h2>
             <h3>$${items[item].price[eggs].toFixed(2)}</h3>
@@ -21,13 +22,13 @@ let select_item = (item_num, num_eggs) => {
     receipt[item_name].count[num_eggs] += 1;
   }
   else {
-    receipt[item_name] = {"count": [0, 0, 0], "item": item};
+    receipt[item_name] = {"count": [0, 0, 0, 0, 0, 0, 0], "item": item};
     receipt[item_name].count[num_eggs] = 1;
   }
   reload_receipt();
 }
 
-let reload_report = () => {
+let reload_report = data => {
   let report_el = document.getElementById("report");
   let report_string = "";
   let total_cakes = 0;
@@ -37,25 +38,31 @@ let reload_report = () => {
       <th>Quantity</th>
       <th>Type</th>
       <th>Eggs</th>
+      <th>Price</th>
     </tr>
   `;
-  for(item in totals) {
+  for(item in data) {
     for(let eggs = 0; eggs < 3; eggs++) {
-      if(totals[item].count[eggs] > 0) {
+      if(item === "dai gia dau" || item === "dai gia t/c") {
+        eggs = 6;
+      }
+      if(data[item].count[eggs] > 0) {
         report_string += `<tr class="report-row">
-          <td>${totals[item].count[eggs]}</td>
+          <td>${data[item].count[eggs]}</td>
           <td>${item}</td>
           <td>${eggs}</td>
+          <td>$${(data[item].count[eggs] * data[item].item.price[eggs]).toFixed(2)}</td>
         </tr>`;
-        total_cakes += totals[item].count[eggs];
-        total_money += totals[item].count[eggs] * totals[item].item.price[eggs];
+        total_cakes += data[item].count[eggs];
+        total_money += data[item].count[eggs] * data[item].item.price[eggs];
       }
     }
   }
-  report_string += `<tr class="report-row">
-      <td>${total_cakes}</td>
-      <td>Total</td>
-      <td>$${total_money.toFixed(2)}</td>
+  report_string += `<tr class="report-total-row">
+      <td class="report-total-row">${total_cakes}</td>
+      <td class="report-total-row">Total</td>
+      <td class="report-total-row"></td>
+      <td class="report-total-row">$${total_money.toFixed(2)}</td>
     </tr>
   </table>`;
 
@@ -69,6 +76,9 @@ let reload_receipt = () => {
   receipt_items_el.innerHTML = "";
   for(item in receipt) {
     for(let eggs = 0; eggs < 3; eggs++) {
+      if(item === "dai gia dau" || item === "dai gia t/c") {
+        eggs = 6;
+      }
       if(receipt[item].count[eggs] > 0) {
         receipt_items_el.innerHTML += `<div class="receipt-item">
           <h3>(${receipt[item].count[eggs]}) ${item} (${eggs} eggs}</h3>
@@ -101,6 +111,8 @@ let buy_items = () => {
 
   window.localStorage.setItem("mooncake-totals", JSON.stringify(totals));
 
+  print_receipt();
+
   receipt = {};
   reload_receipt();
 }
@@ -112,13 +124,15 @@ let print_report = () => {
   }
   else {
     totals = JSON.parse(window.localStorage.getItem("mooncake-totals"));
-    reload_report();
+    reload_report(totals);
 
     window.print();
-
-    reload_receipt();
-    return;
   }
+}
+
+let print_receipt = () => {
+  reload_report(receipt);
+  window.print();
 }
 
 let clear_totals = () => {
@@ -135,7 +149,9 @@ let items = [
     {"name": "deo thap cam", "price": [6.00, 6.50, "n/a"]},
     {"name": "deo khoai mon", "price": [6.00, 6.50, "n/a"]},
     {"name": "dau sau rieng", "price": [4.50, "n/a", 6.00]},
-    // {"name": "thap cam dac biet...", "price": ["n/a", "n/a", 8.25]},
+    {"name": "thap cam DB", "price": ["n/a", "n/a", 8.25]},
+    {"name": "dai gia dau", "price": ["n/a", "n/a", "n/a", "n/a", "n/a", "n/a", 25.00]},
+    {"name": "dai gia t/c", "price": ["n/a", "n/a", "n/a", "n/a", "n/a", "n/a", 31.00]},
 ];
 
 // Initialize the totals
