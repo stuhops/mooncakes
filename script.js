@@ -81,7 +81,7 @@ let reload_receipt = () => {
       }
       if(receipt[item].count[eggs] > 0) {
         receipt_items_el.innerHTML += `<div class="receipt-item">
-          <h3>(${receipt[item].count[eggs]}) ${item} (${eggs} eggs}</h3>
+          <h3>(${receipt[item].count[eggs]}) ${item} (${eggs} eggs)</h3>
           <p>    $${receipt[item].item.price[eggs].toFixed(2)}</p>
         </div>`
         total += receipt[item].count[eggs] * receipt[item].item.price[eggs];
